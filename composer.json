@@ -1,0 +1,23 @@
+{
+  "name": "jlemberg/php-cleverreach",
+  "description": "CleverReach REST API Wrapper",
+  "license": "MIT",
+  "require": {
+    "php": ">=5.3"
+  },
+  "require-dev": {
+  },
+  "autoload": {
+    "psr-0": {
+      "": "src"
+    }
+  },
+  "homepage": "https://github.com/jlemberg/php-cleverreach",
+  "authors": [
+    {
+      "name": "Jannik Lemberg",
+      "email": "j.lemberg@nullwerk.de",
+      "homepage": "http://www.jannik-lemberg.com/"
+    }
+  ]
+}
