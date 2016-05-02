@@ -116,6 +116,10 @@ class CleverReach
 
             $d = json_decode($response['body'], true);
 
+            if(isset($d['error'])) {
+                $this->requestSuccessful = false;
+            }
+
             return $d;
         }
 
