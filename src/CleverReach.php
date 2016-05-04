@@ -3,7 +3,7 @@
 class CleverReach
 {
     private $apiKey;
-    private $apiEndpoint = 'https://rest.cleverreach.com/v1/';
+    private $apiEndpoint = 'https://rest.cleverreach.com/v1';
 
     public $verifySsl = true;
 
@@ -19,35 +19,25 @@ class CleverReach
         return $this->requestSuccessful;
     }
 
-    public function delete($method, $args = array(), $timeout = 10)
+    public function delete($method, $args = array())
     {
-        return $this->makeRequest('delete', $method, $args, $timeout);
+        return $this->makeRequest('delete', $method, $args);
     }
 
-    public function get($method, $args = array(), $timeout = 10)
+    public function get($method, $args = array())
     {
-        return $this->makeRequest('get', $method, $args, $timeout);
+        return $this->makeRequest('get', $method, $args);
     }
 
-    public function patch($method, $args = array(), $timeout = 10)
+    public function post($method, $args = array())
     {
-        return $this->makeRequest('patch', $method, $args, $timeout);
+        return $this->makeRequest('post', $method, $args);
     }
 
-    public function post($method, $args = array(), $timeout = 10)
-    {
-        return $this->makeRequest('post', $method, $args, $timeout);
-    }
-
-    public function put($method, $args = array(), $timeout = 10)
-    {
-        return $this->makeRequest('put', $method, $args, $timeout);
-    }
-
-    private function makeRequest($http_verb, $method, $args = array(), $timeout = 10)
+    private function makeRequest($http_verb, $method, $args = array())
     {
         if (!function_exists('curl_init') || !function_exists('curl_setopt')) {
-            throw new Exception("cURL support is required, but can't be found.");
+            throw new Exception("no curl.");
         }
 
         $url = $this->apiEndpoint . '/' . $method;
@@ -64,7 +54,7 @@ class CleverReach
         ));
         curl_setopt($ch, CURLOPT_USERAGENT, 'jlemberg/php-cleverreach/1.0 (github.com/jlemberg/php-cleverreach)');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 10);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, $this->verifySsl);
         curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0);
         curl_setopt($ch, CURLOPT_ENCODING, '');
@@ -116,8 +106,8 @@ class CleverReach
 
             $d = json_decode($response['body'], true);
 
-            if(isset($d['error'])) {
-                $this->requestSuccessful = false;
+            if(!isset($d['error'])) {
+                $this->requestSuccessful = true;
             }
 
             return $d;
