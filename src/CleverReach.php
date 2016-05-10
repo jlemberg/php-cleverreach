@@ -34,6 +34,11 @@ class CleverReach
         return $this->makeRequest('post', $method, $args);
     }
 
+    public function put($method, $args = array())
+    {
+        return $this->makeRequest('put', $method, $args);
+    }
+
     private function makeRequest($http_verb, $method, $args = array())
     {
         if (!function_exists('curl_init') || !function_exists('curl_setopt')) {
