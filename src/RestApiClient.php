@@ -9,7 +9,7 @@ class RestApiClient
 
     private $requestSuccessful = false;
 
-    public function __construct($apiEndpoint, $apiKey)
+    public function __construct($apiEndpoint, $apiKey = null)
     {
         $this->apiEndpoint = $apiEndpoint;
         $this->apiKey = $apiKey;
@@ -53,11 +53,15 @@ class RestApiClient
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        $headers = array(
             'Accept: application/json',
-            'Content-Type: application/json',
-            'Authorization: Bearer ' . $this->apiKey
-        ));
+            'Content-Type: application/json'
+        );
+        if($this->apiKey !== null) {
+            $headers[] = 'Authorization: Bearer ' . $this->apiKey;
+        }
+
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($ch, CURLOPT_USERAGENT, 'jlemberg/rest-api-client/1.0 (github.com/jlemberg/php-cleverreach)');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_TIMEOUT, 10);
