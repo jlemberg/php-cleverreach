@@ -1,16 +1,17 @@
 <?php
 
-class CleverReach
+class RestApiClient
 {
     private $apiKey;
-    private $apiEndpoint = 'https://rest.cleverreach.com/v1';
+    private $apiEndpoint;
 
     public $verifySsl = true;
 
     private $requestSuccessful = false;
 
-    public function __construct($apiKey)
+    public function __construct($apiEndpoint, $apiKey)
     {
+        $this->apiEndpoint = $apiEndpoint;
         $this->apiKey = $apiKey;
     }
 
@@ -57,7 +58,7 @@ class CleverReach
             'Content-Type: application/json',
             'Authorization: Bearer ' . $this->apiKey
         ));
-        curl_setopt($ch, CURLOPT_USERAGENT, 'jlemberg/php-cleverreach/1.0 (github.com/jlemberg/php-cleverreach)');
+        curl_setopt($ch, CURLOPT_USERAGENT, 'jlemberg/rest-api-client/1.0 (github.com/jlemberg/php-cleverreach)');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_TIMEOUT, 10);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, $this->verifySsl);

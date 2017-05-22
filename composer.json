@@ -1,6 +1,6 @@
 {
   "name": "jlemberg/php-cleverreach",
-  "description": "CleverReach REST API Wrapper",
+  "description": "Generic REST API Wrapper",
   "license": "MIT",
   "require": {
     "php": ">=5.3"
